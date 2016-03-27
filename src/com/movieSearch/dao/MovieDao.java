@@ -2,13 +2,29 @@ package com.movieSearch.dao;
 
 import java.util.List;
 import com.movieSearch.model.movie;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 
-import org.springframework.dao.DataAccessException;
-
-public interface MovieDao {
-	List getMovieListByTitle(String title) throws DataAccessException;
+public class MovieDao {
 	
-	List searchMovie (String keyword) throws DataAccessException;
+	private SqlSessionFactory sqlSessionFactory;
 	
-	movie getMovie (String title) throws DataAccessException;
+	public MovieDao() {
+		sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
+		
+	}
+	
+	@SupressWarnings("unchecked")
+	
+	public movie searchMovie(movie movie) {
+		SqlSession session = sqlSessionFactory.openSession();
+		
+		try {
+			movie = (movie)session.selectOne("movie.getAll", movie);
+			return movie;
+		}
+		finally {
+			session.close();
+		}
+	}
 }
