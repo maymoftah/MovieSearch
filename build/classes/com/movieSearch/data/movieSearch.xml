@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="movieSearch">
+
+	<resultMap id="result" type="movie">
+		<result property="title" column = "TITLE"/>
+		<result property="genre" column = "GENRE"/>
+		<result property="synposis" column = "SYNOPSIS"/>
+		<result property="length" column = "LENGTH"/>
+		<result property="releaseYear" column = "RELEASEYR"/>
+	</resultMap>
+	
+	<select id = "getMovieByTitle" parameterType = "movie" resultType = "movie">
+	SELECT * FROM movie_table where title = #{ title }
+	</select> 
+</mapper>
